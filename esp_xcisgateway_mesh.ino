@@ -12,11 +12,16 @@ ESP8266WebServer *server;
 int loopCount = 0;
 
 
-const char *ssid = "Buffalo-G-A5F8";
-const char *password = "bvvved6gfgfar";
-IPAddress staticIP(10,141,109,50);
-IPAddress gateway(10,141,108,1);  
-IPAddress subnet(255,255,252,0);
+//const char *ssid = "Buffalo-G-A5F8";
+//const char *password = "bvvved6gfgfar";
+//IPAddress staticIP(10,141,109,50);
+//IPAddress gateway(10,141,108,1);  
+//IPAddress subnet(255,255,252,0);
+const char *ssid = "sharpnet";
+const char *password = "0294400648";
+IPAddress staticIP(192,168,0,51);
+IPAddress gateway(192,168,0,1);  
+IPAddress subnet(255,255,255,0);
 
 #define UPLINK 0
 
