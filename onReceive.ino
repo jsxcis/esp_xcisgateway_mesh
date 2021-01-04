@@ -2,7 +2,7 @@ bool onReceive()
 {
   
     response = readResponse();
-    //response = "ID=01,Name=Azabu,fenceValue=100,";
+    //response = "ID=01,Name=Azabu,Value=100,";
     String loraID = response.substring(3,5);
     int scanID = sensors.getSensorScanNumber(loraID);
     sensors.setSensorData(scanID, response);

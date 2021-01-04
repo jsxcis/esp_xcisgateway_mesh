@@ -31,7 +31,7 @@ void setDefaults()
   strcpy(configuration.dns1,"8.8.8.8");
   strcpy(configuration.portNumber,"80");
   configuration.scanListLength = 0;
-  configuration.scanRate = 3000;
+  configuration.scanRate = 10000;
   
   EEPROM_writeAnything(0, configuration);
   EEPROM.commit();

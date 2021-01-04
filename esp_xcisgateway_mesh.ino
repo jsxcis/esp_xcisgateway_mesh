@@ -1,11 +1,10 @@
 #include <XcisSensor.h>
-
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include <LoRa.h>
 #include "EEPROMAnything.h"
 
-//#define debug
+#define debug
 
 ESP8266WebServer *server;
 
@@ -19,7 +18,7 @@ int loopCount = 0;
 //IPAddress subnet(255,255,252,0);
 const char *ssid = "sharpnet";
 const char *password = "0294400648";
-IPAddress staticIP(192,168,0,51);
+IPAddress staticIP(192,168,0,52);
 IPAddress gateway(192,168,0,1);  
 IPAddress subnet(255,255,255,0);
 
@@ -82,6 +81,9 @@ void checkOnline()
 String response = "NULL";
 void scanSensors()
 {
+  #ifdef debug
+  Serial.println("scanSensors-------------------------------------");
+  #endif
     int sensorToScan = sensors.scanNextSensor();
     if (sensorToScan != -1)
     {
@@ -93,17 +95,20 @@ void scanSensors()
       //digitalWrite(UPLINK, HIGH);//OFF
     }
   //digitalWrite(UPLINK, LOW);//ON
+  #ifdef debug
+  Serial.println("scanSensors done");
+  #endif
 }
 
 void setup()
 {
     //pinMode(UPLINK, OUTPUT);
     //digitalWrite(UPLINK, HIGH);
-    Serial.begin(115200);
-    Serial.println();
-    Serial.flush();
-    Serial.end();
-    delay(100);
+    //Serial.begin(115200);
+    //Serial.println();
+    //Serial.flush();
+    //Serial.end();
+    //delay(100);
     Serial.begin(115200);
     #ifdef debug
     Serial.printf("\n\nSdk version: %s\n", ESP.getSdkVersion());
@@ -124,10 +129,12 @@ void setup()
     #ifdef debug
     displayConfiguration();
     #endif
-    
-    WiFi.mode(WIFI_STA);
+
+
+    WiFi.setSleepMode(WIFI_NONE_SLEEP);
+    //WiFi.mode(WIFI_STA);
     WiFi.begin(ssid, password);
-    WiFi.config(staticIP, gateway, subnet);
+    //WiFi.config(staticIP, gateway, subnet);
     while (WiFi.status() != WL_CONNECTED)
     {
       delay(500);
@@ -142,6 +149,7 @@ void setup()
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
+ 
   #endif
   
     server = new ESP8266WebServer(80);
@@ -166,6 +174,7 @@ void setup()
 }
 void loop()
 {
+  /*
    // check if online check delay has timed out after Xsec == CHECK_ONLINE_TIME
   if (delayOnlineCheck && ((millis() - delayOnlineCheckStart) >= CHECK_ONLINE_TIME))
   {
@@ -180,8 +189,10 @@ void loop()
     //delayRunning = false; // // prevent this code being run more then once
     scanSensors();
   }
-  //delay(100);
+  delay(100);
+   */
   server->handleClient();
   //onReceive();
+ 
 
 }
