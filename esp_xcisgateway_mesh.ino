@@ -4,7 +4,7 @@
 #include <LoRa.h>
 #include "EEPROMAnything.h"
 
-#define debug
+//#define debug
 
 ESP8266WebServer *server;
 
@@ -16,10 +16,17 @@ int loopCount = 0;
 //IPAddress staticIP(10,141,109,50);
 //IPAddress gateway(10,141,108,1);  
 //IPAddress subnet(255,255,252,0);
-const char *ssid = "sharpnet";
-const char *password = "0294400648";
-IPAddress staticIP(192,168,0,52);
-IPAddress gateway(192,168,0,1);  
+//const char *ssid = "sharpnet";
+//const char *password = "0294400648";
+//IPAddress staticIP(192,168,0,52);
+//IPAddress gateway(192,168,0,1);  
+//IPAddress subnet(255,255,255,0);
+
+// Mobile configuration
+const char *ssid = "XCIS_Router";
+const char *password = "xcis12345";
+IPAddress staticIP(192,168,5,55);
+IPAddress gateway(192,168,5,1);  
 IPAddress subnet(255,255,255,0);
 
 #define UPLINK 0
@@ -130,11 +137,9 @@ void setup()
     displayConfiguration();
     #endif
 
-
-    WiFi.setSleepMode(WIFI_NONE_SLEEP);
-    //WiFi.mode(WIFI_STA);
+    WiFi.mode(WIFI_STA);
     WiFi.begin(ssid, password);
-    //WiFi.config(staticIP, gateway, subnet);
+    WiFi.config(staticIP, gateway, subnet);
     while (WiFi.status() != WL_CONNECTED)
     {
       delay(500);
@@ -149,7 +154,6 @@ void setup()
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
- 
   #endif
   
     server = new ESP8266WebServer(80);
@@ -174,7 +178,7 @@ void setup()
 }
 void loop()
 {
-  /*
+  
    // check if online check delay has timed out after Xsec == CHECK_ONLINE_TIME
   if (delayOnlineCheck && ((millis() - delayOnlineCheckStart) >= CHECK_ONLINE_TIME))
   {
@@ -190,9 +194,7 @@ void loop()
     scanSensors();
   }
   delay(100);
-   */
   server->handleClient();
   //onReceive();
  
-
 }
